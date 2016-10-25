@@ -29,17 +29,11 @@ public class CalcActivity extends Activity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText copiesText = (EditText) findViewById(R.id.copies);
-                int copies = Integer.parseInt(copiesText.getText().toString());
 
-                EditText deckText = (EditText) findViewById(R.id.deck);
-                int deck = Integer.parseInt(deckText.getText().toString());
-
-                EditText drawsText = (EditText) findViewById(R.id.draws);
-                int draws = Integer.parseInt(drawsText.getText().toString());
-
-                EditText desiredText = (EditText) findViewById(R.id.desired);
-                int desired = Integer.parseInt(desiredText.getText().toString());
+                int copies = getIntFromEditText(R.id.copies);
+                int deck = getIntFromEditText(R.id.deck);
+                int draws = getIntFromEditText(R.id.draws);
+                int desired = getIntFromEditText(R.id.desired);
 
                 Spinner equalitySpinner = (Spinner) findViewById(R.id.equality_spinner);
                 boolean equality = equalitySpinner.getSelectedItem().toString().equals("equal");
@@ -88,6 +82,10 @@ public class CalcActivity extends Activity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         if(getCurrentFocus() != null)
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+    }
+
+    private int getIntFromEditText(int id) {
+        return Integer.parseInt(((EditText) findViewById(id)).getText().toString());
     }
 
 }
