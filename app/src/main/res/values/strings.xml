@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">DrawProbability</string>
+    <string name="long_app_name">Draw Probability</string>
+    <string name="calculate_label">Start</string>
+    <string name="how_to_label">How To</string>
+    <string name="about_label">About</string>
+    <string name="ok_label">OK</string>
+    <string name="about_title">About Draw Probability</string>
+    <string name="about_text">
+        \ This is an app that calculates the probability of drawing a certain card (out of multiple ones) from a deck of a certain size.
+        It takes into consideration the number of copies in the deck, the number of cards in the deck, and how many draws happen.\n
+        There is also the option to find the probability of drawing exactly a certain number of that card, or at least that many.
+    </string>
+
+    <string name="calculate_title">Calculate Probability</string>
+    <string name="draws">Number of draws</string>
+    <string name="deck_size">Size of deck</string>
+    <string name="successes">Number of copies in deck</string>
+    <string name="desired">Desired number of copies</string>
+    <string-array name="equality">
+        <item>Exactly</item>
+        <item>At least</item>
+    </string-array>
+    <string name="calculate_button">Calculate</string>
+
+</resources>
