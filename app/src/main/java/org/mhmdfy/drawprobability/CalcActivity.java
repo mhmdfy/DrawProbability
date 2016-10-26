@@ -1,7 +1,6 @@
 package org.mhmdfy.drawprobability;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +35,7 @@ public class CalcActivity extends Activity {
                 int desired = getIntFromEditText(R.id.desired);
 
                 Spinner equalitySpinner = (Spinner) findViewById(R.id.equality_spinner);
-                boolean equality = equalitySpinner.getSelectedItem().toString().equals("equal");
+                boolean equality = equalitySpinner.getSelectedItem().toString().toLowerCase().equals("exactly");
 
                 TextView answer = (TextView) findViewById(R.id.percent);
                 double percent = Math.round(calculate(copies, deck, draws, desired, equality) * 10000)/100.0;
@@ -49,15 +48,17 @@ public class CalcActivity extends Activity {
 
     private double calculate(int copies, int deck, int draws, int desired, boolean equal) {
 
-        //Log.d("Calc", "values are:\nCopies = "+copies+"\nDeck = "+deck+"\nDraws = "+draws+"\nDesired = " + desired);
+        //Log.d("Calc", "values are:\nCopies = "+copies+"\nDeck = "+deck+"\nDraws = "
+                //+draws+"\nDesired = " + desired +"\nEqual? = " + equal);
 
-        if(equal)
+        if(equal || desired == 0)
             return hypergeometric(copies, deck, draws, desired);
         else
             return 1.0 - hypergeometric(deck-copies, deck, draws, draws-desired+1);
     }
 
     private double hypergeometric(int K, int N, int n, int k) {
+        //Log.d("hyper", "h("+K+", "+N+", "+n+", "+k+")");
         return (choose(K, k) * choose(N-K, n-k))/choose(N, n);
     }
 
