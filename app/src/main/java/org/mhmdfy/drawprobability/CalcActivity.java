@@ -35,7 +35,7 @@ public class CalcActivity extends Activity {
                 int desired = getIntFromEditText(R.id.desired);
 
                 Spinner equalitySpinner = (Spinner) findViewById(R.id.equality_spinner);
-                boolean equality = equalitySpinner.getSelectedItem().toString().toLowerCase().equals("exactly");
+                String equality = equalitySpinner.getSelectedItem().toString().toLowerCase();
 
                 TextView answer = (TextView) findViewById(R.id.percent);
                 double percent = Math.round(calculate(copies, deck, draws, desired, equality) * 10000)/100.0;
@@ -46,20 +46,37 @@ public class CalcActivity extends Activity {
 
     }
 
-    private double calculate(int copies, int deck, int draws, int desired, boolean equal) {
+    private double calculate(int copies, int deck, int draws, int desired, String equality) {
+        
+        Log.d("Calc", "values are:\nCopies = "+copies+"\nDeck = "+deck+"\nDraws = "
+                +draws+"\nDesired = " + desired +"\nEqual? = " + equality);
 
-        //Log.d("Calc", "values are:\nCopies = "+copies+"\nDeck = "+deck+"\nDraws = "
-                //+draws+"\nDesired = " + desired +"\nEqual? = " + equal);
-
-        if(equal || desired == 0)
+        if(equality.equals("exactly") || desired == 0)
             return hypergeometric(copies, deck, draws, desired);
+        else if (equality.equals("at most"))
+            return hypergeoMost(copies, deck, draws, desired);
         else
-            return 1.0 - hypergeometric(deck-copies, deck, draws, draws-desired+1);
+            //return 1.0 - hypergeometric(deck-copies, deck, draws, draws-desired+1);
+            return hypergeoLeast(copies, deck, draws, desired);
     }
 
     private double hypergeometric(int K, int N, int n, int k) {
-        //Log.d("hyper", "h("+K+", "+N+", "+n+", "+k+")");
+        Log.d("hyper", "h("+K+", "+N+", "+n+", "+k+")");
         return (choose(K, k) * choose(N-K, n-k))/choose(N, n);
+    }
+
+    private double hypergeoMost(int K, int N, int n, int k) {
+        if(k == 0)
+            return hypergeometric(K, N, n, k);
+        else
+            return hypergeometric(K, N, n, k) + hypergeoMost(K, N, n, k-1);
+    }
+
+    private double hypergeoLeast(int K, int N, int n, int k) {
+        if(k == n || k == K)
+            return hypergeometric(K, N, n, k);
+        else
+            return hypergeometric(K, N, n, k) + hypergeoLeast(K, N, n, k+1);
     }
 
     private double choose(int n, int k) {

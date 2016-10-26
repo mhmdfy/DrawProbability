@@ -20,6 +20,7 @@
     <string-array name="equality">
         <item>Exactly</item>
         <item>At least</item>
+        <item>At most</item>
     </string-array>
     <string name="calculate_button">Calculate</string>
 
