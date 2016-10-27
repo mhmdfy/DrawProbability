@@ -36,8 +36,8 @@ public class CalcActivity extends Activity {
                 int desired = getIntFromEditText(R.id.desired);
 
                 if(invalid(copies, deck, draws, desired)) {
-                    Toast toasty = Toast.makeText(getApplicationContext(), "Please fill fields correctly, " +
-                            "check 'How To' for more information.", Toast.LENGTH_LONG);
+                    Toast toasty = Toast.makeText(getApplicationContext(), R.string.invalid_text,
+                            Toast.LENGTH_LONG);
                     toasty.show();
                 }
                 else {
