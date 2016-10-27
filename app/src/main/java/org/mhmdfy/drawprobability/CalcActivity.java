@@ -46,7 +46,8 @@ public class CalcActivity extends Activity {
                     String equality = equalitySpinner.getSelectedItem().toString().toLowerCase();
 
                     TextView answer = (TextView) findViewById(R.id.percent);
-                    double percent = Math.round(calculate(copies, deck, draws, desired, equality) * 10000) / 100.0;
+                    double percent = Math.round(calculate(copies, deck, draws, desired, equality)
+                            * 10000) / 100.0;
                     answer.setText(String.valueOf(percent) + "%");
                 }
                 hideSoftKeyboard();

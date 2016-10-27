@@ -24,6 +24,6 @@
     </string-array>
     <string name="calculate_button">Calculate</string>
 
-    <string name="invalid_text">Please fill fields correctly, check 'How To' for more information.</string>
+    <string name="invalid_text">Please fill fields correctly, check \'How To\' for more information.</string>
 
 </resources>
