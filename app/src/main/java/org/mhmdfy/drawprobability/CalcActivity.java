@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CalcActivity extends Activity {
 
@@ -34,24 +35,43 @@ public class CalcActivity extends Activity {
                 int draws = getIntFromEditText(R.id.draws);
                 int desired = getIntFromEditText(R.id.desired);
 
-                Spinner equalitySpinner = (Spinner) findViewById(R.id.equality_spinner);
-                String equality = equalitySpinner.getSelectedItem().toString().toLowerCase();
+                if(invalid(copies, deck, draws, desired)) {
+                    Toast toasty = Toast.makeText(getApplicationContext(), R.string.invalid_text,
+                            Toast.LENGTH_LONG);
+                    toasty.show();
+                }
+                else {
 
-                TextView answer = (TextView) findViewById(R.id.percent);
-                double percent = Math.round(calculate(copies, deck, draws, desired, equality) * 10000)/100.0;
-                answer.setText(String.valueOf(percent)+"%");
+                    Spinner equalitySpinner = (Spinner) findViewById(R.id.equality_spinner);
+                    String equality = equalitySpinner.getSelectedItem().toString().toLowerCase();
+
+                    TextView answer = (TextView) findViewById(R.id.percent);
+                    double percent = Math.round(calculate(copies, deck, draws, desired, equality)
+                            * 10000) / 100.0;
+                    answer.setText(String.valueOf(percent) + "%");
+                }
                 hideSoftKeyboard();
             }
         });
 
     }
 
+    private boolean invalid(int copies, int deck, int draws, int desired) {
+        if (copies < 0 || deck < 0 || draws < 0 || desired < 0)
+            return true;
+
+        if(copies > deck)
+            return true;
+
+        return false;
+    }
+
     private double calculate(int copies, int deck, int draws, int desired, String equality) {
-        
+
         Log.d("Calc", "values are:\nCopies = "+copies+"\nDeck = "+deck+"\nDraws = "
                 +draws+"\nDesired = " + desired +"\nEqual? = " + equality);
 
-        if(equality.equals("exactly") || desired == 0)
+        if(equality.equals("exactly"))
             return hypergeometric(copies, deck, draws, desired);
         else if (equality.equals("at most"))
             return hypergeoMost(copies, deck, draws, desired);
@@ -103,7 +123,11 @@ public class CalcActivity extends Activity {
     }
 
     private int getIntFromEditText(int id) {
-        return Integer.parseInt(((EditText) findViewById(id)).getText().toString());
+        String s = ((EditText) findViewById(id)).getText().toString();
+        if (s.isEmpty())
+            return -1;
+        else
+            return Integer.parseInt(((EditText) findViewById(id)).getText().toString());
     }
 
 }
